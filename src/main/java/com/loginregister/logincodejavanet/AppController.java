@@ -2,6 +2,8 @@ package com.loginregister.logincodejavanet;
 
 import com.loginregister.logincodejavanet.RestaurantDishes.Menu;
 import com.loginregister.logincodejavanet.RestaurantDishes.MenuRepository;
+import com.loginregister.logincodejavanet.UserPackage.User;
+import com.loginregister.logincodejavanet.UserPackage.UserRepository;
 import com.loginregister.logincodejavanet.dto.OrderDTO;
 import com.loginregister.logincodejavanet.dto.OrderItemDTO;
 import com.loginregister.logincodejavanet.orderItems.OrderItem;
@@ -20,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 

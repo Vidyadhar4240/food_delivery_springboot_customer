@@ -1,4 +1,4 @@
-package com.loginregister.logincodejavanet;
+package com.loginregister.logincodejavanet.UserPackage;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

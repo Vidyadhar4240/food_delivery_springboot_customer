@@ -1,4 +1,4 @@
-package com.loginregister.logincodejavanet;
+package com.loginregister.logincodejavanet.UserPackage;
 
 import javax.persistence.*;
 
