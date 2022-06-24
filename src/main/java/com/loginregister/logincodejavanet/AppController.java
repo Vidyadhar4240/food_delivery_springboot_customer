@@ -1,5 +1,6 @@
 package com.loginregister.logincodejavanet;
 
+import com.loginregister.logincodejavanet.KafkaService.KafkaProducerService;
 import com.loginregister.logincodejavanet.RestaurantDishes.Menu;
 import com.loginregister.logincodejavanet.RestaurantDishes.MenuRepository;
 import com.loginregister.logincodejavanet.UserPackage.User;
@@ -41,6 +42,9 @@ public class AppController {
 
     @Autowired
     private OrderItemRepository orderItemRepo;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
 
     @GetMapping("")
     public String viewHomePage() {
@@ -121,6 +125,11 @@ public class AppController {
 
         Order order = null;
         if(orderDTO != null && orderDTO.getOrderItems() != null){
+
+                order = new Order();
+                order.setUserId(orderDTO.getUserId());
+
+
             List<OrderItem> orderItems = new ArrayList<>();
             OrderItem orderItem = null;
             double totalAmount = 0;
@@ -128,22 +137,30 @@ public class AppController {
                if(orderItemDTO.isSelected()){
                    orderItem = new OrderItem();
                    orderItem.setMenuId(orderItemDTO.getMenuId());
-                   orderItems.add(orderItem);
+
                    totalAmount = getTotal(totalAmount, (double) orderItemDTO.getAmount());
+                   order.setUserId(orderDTO.getUserId());
+                   order.setTotalAmount(totalAmount);
+
+                   orderItem.setOrder(order);
+                   orderItems.add(orderItem);
 //                   totalAmount += (Double) orderItemDTO.getAmount();
                }
             }
+            order.setOrderItems(orderItems);
+            orderRepo.save(order);
+            kafkaProducerService.saveCreatedOrderLog(orderDTO);
             model.addAttribute("totalAmount", totalAmount);
-            if(!orderItems.isEmpty()){
-                order = new Order();
-                order.setUserId(orderDTO.getUserId());
-                order.setTotalAmount(totalAmount);
-                orderRepo.save(order);
-                for(OrderItem item : orderItems){
-                    item.setOrderId(order.getOrderId());
-                    orderItemRepo.save(item);
-                }
-            }
+//            if(!orderItems.isEmpty()){
+//                order = new Order();
+//                order.setUserId(orderDTO.getUserId());
+//                order.setTotalAmount(totalAmount);
+//                orderRepo.save(order);
+//                for(OrderItem item : orderItems){
+//                    item.setOrderId(order.getOrderId());
+//                    orderItemRepo.save(item);
+//                }
+//            }
         }
         return "order_successful";
     }

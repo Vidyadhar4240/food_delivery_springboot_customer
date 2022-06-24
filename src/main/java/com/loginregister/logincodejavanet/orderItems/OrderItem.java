@@ -18,8 +18,9 @@ public class OrderItem {
     @Column(name = "menu_id")
     private int menuId;
 
-    @Column(name="order_id")
-    private int orderId;
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     public int getOrderitemId() {
         return orderitemId;
@@ -37,11 +38,11 @@ public class OrderItem {
         this.menuId = menuId;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

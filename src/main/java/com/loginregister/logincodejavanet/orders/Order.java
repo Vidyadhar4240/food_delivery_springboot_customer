@@ -3,12 +3,13 @@ package com.loginregister.logincodejavanet.orders;
 import com.loginregister.logincodejavanet.orderItems.OrderItem;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order implements Serializable {
 
     private static final long serialVersionUID = 546437l;
 
@@ -23,6 +24,18 @@ public class Order {
     @Column(name = "total_amount")
     private double totalAmount;
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToMany(mappedBy="order", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<OrderItem> orderItems = new ArrayList<OrderItem>();
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
     public double getTotalAmount() {
         return totalAmount;
     }
@@ -46,4 +59,5 @@ public class Order {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
 }
