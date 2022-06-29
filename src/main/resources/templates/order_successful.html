@@ -4,18 +4,74 @@
     <meta charset="UTF-8">
     <title>Order Successful</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <link rel="stylesheet" th:href="@{/main.css}">
+<!--    <link rel="stylesheet" th:href="@{/main.css}">-->
+    <style>
+
+    .ulnavbarclass {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    }
+
+    .navbarclass {
+    float: left;
+    }
+
+    .navbarclass a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    }
+
+    .navbarclass a:hover:not(.active) {
+    background-color: #111;
+    text-decoration: none;
+    }
+
+    navbarclass .active {
+    background-color: #04AA6D;
+    text-decoration: none;
+    }
+    </style>
 </head>
 <body>
-
 <div class="container text-center">
-    <form th:action="@{/logout}" method="post">
-        <p>
-            Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
-        </p>
-        <input type="submit" value="Sign Out">
-    </form>
-</div>
+    <div>
+        <ul class="ulnavbarclass">
+            <li class="navbarclass">
+                <a>DomatoLogo</a>
+            </li>
+            <li class="navbarclass">
+                <a>
+                    Welcome to Domato <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+                </a>
+            </li>
+            <li class="navbarclass">
+                <a>
+                    This is the place where we meet the expectations of all your cravings.
+                </a>
+            </li>
+            <li class="navbarclass" style="float:right">
+                <a>
+                    <form th:action="@{/logout}" method="post" class="active">
+                        <input class="btn btn-danger" type="submit" value="Sign Out">
+                    </form>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/list_restaurants}">Restaurant List</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Order Successful</li>
+            </ol>
+        </nav>
+    </div>
 <div class="d-inline p-4 bg-success text-white">
     <p class="text-center lead">Your order is Successful <b>[[${#request.userPrincipal.principal.fullName}]]</b>.</p>
 </div>
@@ -23,6 +79,6 @@
 <p class="bg-primary text-center lead">Total Amount of Order is Rs.
     <span th:text="${totalAmount}">amount</span>
 </p>
-
+</div>
 </body>
 </html>
